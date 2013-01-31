@@ -22,8 +22,8 @@ my @result = 0, 1 xx 28123;
 for @abundant-ns.kv -> $i, $n {
 	# last if $n > 28123 div 2;	# This line is not necessary, since the inner loop directly quits anyway.
 	my $limit = 28123 - $i;
-	# for $i..^@abundant-ns -> $j {			# 13/15 min, LAZY list == SLOW list... Optimizing it into loop is a better choice (perl5's interpreter does this by default)
-	loop ( my $j = $i; $j < @abundant-ns; $j++ ) {	# 36/41 sec, completely equivalent to the line above, but much faster.
+	# for $i..^@abundant-ns -> $j {			# 13/15 min, (n:. r: takes 41 min with > 4GB mem)
+	loop ( my $j = $i; $j < @abundant-ns; $j++ ) {	# 36/41 sec, (n:. r: takes 49 min with 250MB mem)
 		last if @abundant-ns[$j] > $limit;
 		@result[ @abundant-ns[$j] + $n ] = 0;
 	}
